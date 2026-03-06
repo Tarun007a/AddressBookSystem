@@ -43,7 +43,7 @@ public class AddressBook {
 
     public void editContact() {
         System.out.println("Enter the First Name of the contact to edit:");
-        String name = sc.next();
+        String name = sc.nextLine();
 
         for (Contact contact : contactList) {
             if (contact.getFirstName().equalsIgnoreCase(name)) {
