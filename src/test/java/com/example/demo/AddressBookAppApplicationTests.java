@@ -67,5 +67,34 @@ class AddressBookAppApplicationTests {
 	    int count = repo.countContactsByState("state");
 	    assertTrue(count > 0);
 	}
+	
+	@Test
+	public void testAddContact() {
+	    AddressBookRepository repo = new AddressBookRepository();
+
+	    boolean result = repo.addContact(
+	            "firstname2",
+	            "lastname",
+	            "address",
+	            "city",
+	            "state",
+	            "123456",
+	            "9999999999",
+	            "mail2@test.com"
+	    );
+
+	    assertTrue(result);
+
+	    Contact contact = repo.retrieveContactByFirstName("firstname2");
+
+	    assertEquals("firstname2", contact.getFirstName());
+	    assertEquals("lastname", contact.getLastName());
+	    assertEquals("address", contact.getAddress());
+	    assertEquals("city", contact.getCity());
+	    assertEquals("state", contact.getState());
+	    assertEquals("123456", contact.getZip());
+	    assertEquals("9999999999", contact.getPhoneNumber());
+	    assertEquals("mail2@test.com", contact.getEmail());
+	}
 
 }

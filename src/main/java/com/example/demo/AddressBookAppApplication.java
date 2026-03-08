@@ -129,7 +129,31 @@ public class AddressBookAppApplication {
 					}
 					
 					else if (option == 15) {
-						addressBookRepository.addContact();
+						System.out.println("Enter First Name:");
+			            String firstName = sc.nextLine();
+
+			            System.out.println("Enter Last Name:");
+			            String lastName = sc.nextLine();
+
+			            System.out.println("Enter Address:");
+			            String address = sc.nextLine();
+
+			            System.out.println("Enter City:");
+			            String city = sc.nextLine();
+
+			            System.out.println("Enter State:");
+			            String state = sc.nextLine();
+
+			            System.out.println("Enter Zip:");
+			            String zip = sc.nextLine();
+
+			            System.out.println("Enter Phone Number:");
+			            String phone = sc.nextLine();
+
+			            System.out.println("Enter Email:");
+			            String email = sc.nextLine();
+			            
+						addressBookRepository.addContact(firstName, lastName, address, city, state, zip, phone, email);
 					}
 					
 					else if (option == 16) {
