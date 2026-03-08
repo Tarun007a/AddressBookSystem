@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Scanner;
+
+import com.example.demo.model.Contact;
 import com.example.demo.repository.DBConnection;
 
 
@@ -60,6 +62,7 @@ public class AddressBookRepository {
             e.printStackTrace();
         }
     }
+    
     public int retrieveContacts() {
         try {
             Connection connection = DBConnection.getConnection();
@@ -87,5 +90,63 @@ public class AddressBookRepository {
             e.printStackTrace();
         }
         return 0;
+    }
+    
+    public Contact retrieveContactByFirstName(String firstName) {
+        Contact contact = null;
+        try {
+            Connection connection = DBConnection.getConnection();
+            String query = "SELECT * FROM contacts WHERE first_name=?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, firstName);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+
+                contact = new Contact(
+                        rs.getString("first_name"),
+                        rs.getString("last_name"),
+                        rs.getString("address"),
+                        rs.getString("city"),
+                        rs.getString("state"),
+                        rs.getString("zip"),
+                        rs.getString("phone_number"),
+                        rs.getString("email")
+                );
+            }
+            connection.close();
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return contact;
+    }
+    
+    public int updateContactByFirstName(String firstName, String lastName, String address, String city, String state, String zip, String phone, String email) {
+        int result = 0;
+        try {
+            Connection connection = DBConnection.getConnection();
+
+            String query = "UPDATE contacts SET last_name=?, address=?, city=?, state=?, zip=?, phone_number=?, email=? WHERE first_name=?";
+
+            PreparedStatement ps = connection.prepareStatement(query);
+
+            ps.setString(1, lastName);
+            ps.setString(2, address);
+            ps.setString(3, city);
+            ps.setString(4, state);
+            ps.setString(5, zip);
+            ps.setString(6, phone);
+            ps.setString(7, email);
+            ps.setString(8, firstName);
+
+            result = ps.executeUpdate();
+            connection.close();
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }
