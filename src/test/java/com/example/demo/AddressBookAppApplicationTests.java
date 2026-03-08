@@ -15,7 +15,7 @@ class AddressBookAppApplicationTests {
 	@Test
     public void shouldRetrieveContactsFromDatabase() {
         AddressBookRepository repo = new AddressBookRepository();
-        assertTrue(repo.retrieveContacts() >= 0);
+        assertTrue(repo.retrieveContacts() > 0);
     }
 	
 	@Test
@@ -52,6 +52,20 @@ class AddressBookAppApplicationTests {
 	    AddressBookRepository repo = new AddressBookRepository();
 	    int count = repo.retrieveContactsByDateRange("2026-03-07", "2030-01-01");
 	    assertTrue(count >= 0);
+	}
+	
+	@Test
+	public void testCountContactByCity() {
+	    AddressBookRepository repo = new AddressBookRepository();
+	    int count = repo.countContactsByCity("city");
+	    assertTrue(count > 0);
+	}
+	
+	@Test
+	public void testCountContactByState() {
+	    AddressBookRepository repo = new AddressBookRepository();
+	    int count = repo.countContactsByState("state");
+	    assertTrue(count > 0);
 	}
 
 }
