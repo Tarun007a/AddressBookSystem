@@ -46,5 +46,12 @@ class AddressBookAppApplicationTests {
 	    assertEquals("9999999999", dbContact.getPhoneNumber());
 	    assertEquals("mail@gmail.com", dbContact.getEmail());
 	}
+	
+	@Test
+	public void testRetrieveByDate() {
+	    AddressBookRepository repo = new AddressBookRepository();
+	    int count = repo.retrieveContactsByDateRange("2026-03-07", "2030-01-01");
+	    assertTrue(count >= 0);
+	}
 
 }

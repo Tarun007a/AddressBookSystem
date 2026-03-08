@@ -1,11 +1,11 @@
 package com.example.demo.repository;
 
-import java.awt.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Scanner;
+import java.sql.Date;
 
 import com.example.demo.model.Contact;
 import com.example.demo.repository.DBConnection;
@@ -148,5 +148,40 @@ public class AddressBookRepository {
             e.printStackTrace();
         }
         return result;
+    }
+    
+    public int retrieveContactsByDateRange(String startDate, String endDate) {
+        int count = 0;
+        try {
+            Connection connection = DBConnection.getConnection();
+
+            String query = "SELECT * FROM contacts WHERE date_added BETWEEN ? AND ?";
+            PreparedStatement ps = connection.prepareStatement(query);
+
+            ps.setDate(1, Date.valueOf(startDate));
+            ps.setDate(2, Date.valueOf(endDate));
+
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                System.out.println(
+                        rs.getString("first_name") + " " +
+                        rs.getString("last_name") + ", " +
+                        rs.getString("address") + ", " +
+                        rs.getString("city") + ", " +
+                        rs.getString("state") + ", " +
+                        rs.getString("zip") + ", " +
+                        rs.getString("phone_number") + ", " +
+                        rs.getString("email") + ", " +
+                        rs.getDate("date_added")
+                );
+                count++;
+            }
+            connection.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 }
