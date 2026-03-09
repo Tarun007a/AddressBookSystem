@@ -96,5 +96,21 @@ class AddressBookAppApplicationTests {
 	    assertEquals("9999999999", contact.getPhoneNumber());
 	    assertEquals("mail2@test.com", contact.getEmail());
 	}
+	
+	@Test
+	public void shouldAddMultipleContactsUsingThreads() throws InterruptedException {
+	    AddressBookRepository repo = new AddressBookRepository();
+
+	    repo.addContactUsingThread("thread1","Test1","addr1","city1","state1","111","999","t1@mail.com");
+	    repo.addContactUsingThread("thread2","Test2","addr2","city2","state2","222","999","t2@mail.com");
+
+	    Thread.sleep(2000);
+
+	    Contact c1 = repo.retrieveContactByFirstName("thread1");
+	    Contact c2 = repo.retrieveContactByFirstName("thread2");
+
+	    assertEquals("thread1", c1.getFirstName());
+	    assertEquals("thread2", c2.getFirstName());
+	}
 
 }
